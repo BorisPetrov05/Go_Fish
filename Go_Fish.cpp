@@ -20,7 +20,7 @@ struct Card
 
 const int MAX_CARDS = 52;
 
-//Creating the deck
+//Func Creating the deck
 void createDeck(Card deck[], int& deckSize)
 {
     string faces[] = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
@@ -33,6 +33,17 @@ void createDeck(Card deck[], int& deckSize)
         {
             deck[deckSize++] = { faces[i], suits[j] };
         }
+    }
+}
+
+//Func Shuffling the deck
+void shuffleDeck(Card deck[], int deckSize)
+{
+    srand(static_cast<unsigned>(time(0))); //convert time_t to unsigned int
+    for (int i = 0; i < deckSize; i++)
+    {
+        int randIndex = rand() % deckSize; //random index
+        swap(deck[i], deck[randIndex]);
     }
 }
 
