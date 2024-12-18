@@ -47,6 +47,16 @@ void shuffleDeck(Card deck[], int deckSize)
     }
 }
 
+//Func Shows the hand
+void showHand(Card hand[], int handSize)
+{
+    for (int i = 0; i < handSize; i++)
+    {
+        cout << hand[i].ToString() << ",  ";
+    }
+    cout << endl;
+}
+
 int main()
 {
 
