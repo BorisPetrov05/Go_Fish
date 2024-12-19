@@ -19,6 +19,8 @@ struct Card
 };
 
 const int MAX_CARDS = 52;
+const int START_HAND_SIZE = 6;
+
 
 //Func Creating the deck
 void createDeck(Card deck[], int& deckSize)
@@ -57,8 +59,69 @@ void showHand(Card hand[], int handSize)
     cout << endl;
 }
 
+//Func Checks if a player wins
+bool checkWinner(int handSize)
+{
+    return handSize == 0;
+}
+
+//Func draw requested face
+//to be fixed
+bool drawCard(Card fromHand[], int& fromHandSize, Card toHand[], int& toHandSize, string& face)
+{
+    for (int i = 0; i < fromHandSize; i++)
+    {
+        if (fromHand[i].face == face)
+        {
+            toHand[toHandSize++] = fromHand[i];
+
+            for (int j = i; j < fromHandSize-1; j++)
+            {
+                fromHand[j] = fromHand[j + 1];
+            }
+            fromHandSize--;
+            return true;
+        }
+    }
+    return false;
+}
+
+//to be added
+//Func deal cards to players, 6 cards
+bool dealCards()
+{
+    return true;
+}
+
 int main()
 {
+    Card deck[MAX_CARDS];
+    int deckSize;
 
+    Card playerHand[MAX_CARDS];
+    int playerHandSize;
+
+    Card computerHand[MAX_CARDS];
+    int computerHandSize;
+
+    createDeck(deck, deckSize);
+    shuffleDeck(deck, deckSize);
+    //dealCards();
+
+    bool playerTurn = true;
+
+    while (true)
+    {
+        if (checkWinner(playerHandSize))
+        {
+            cout << "You lose!" << endl;
+            break;
+        }
+        else if (checkWinner(computerHandSize))
+        {
+            cout << "You win!" << endl;
+            break;
+        }
+    }
 }
 
