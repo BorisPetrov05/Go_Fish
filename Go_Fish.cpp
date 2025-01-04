@@ -21,8 +21,6 @@ struct Card
 const int MAX_CARDS = 52;
 const int START_HAND_SIZE = 6;
 
-
-//Func Creating the deck
 void createDeck(Card deck[], int& deckSize)
 {
     string faces[] = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
@@ -38,7 +36,6 @@ void createDeck(Card deck[], int& deckSize)
     }
 }
 
-//Func Shuffling the deck
 void shuffleDeck(Card deck[], int deckSize)
 {
     srand(static_cast<unsigned>(time(0))); //convert time_t to unsigned int
@@ -49,7 +46,6 @@ void shuffleDeck(Card deck[], int deckSize)
     }
 }
 
-//Func Shows the hand
 void showHand(Card hand[], int handSize)
 {
     for (int i = 0; i < handSize; i++)
@@ -59,38 +55,50 @@ void showHand(Card hand[], int handSize)
     cout << endl;
 }
 
-//Func Checks if a player wins
-bool checkWinner(int handSize)
+bool checkWinner(const int handSize, const int deckSize)
 {
-    return handSize == 0;
+    return handSize == 0 && deckSize == 0;;
 }
 
-//Func draw requested face
+//Func draw requested face/take a card from enemy
 //to be fixed
-bool drawCard(Card fromHand[], int& fromHandSize, Card toHand[], int& toHandSize, string& face)
+bool drawCard(Card fromHand[], int& fromHandSize, Card toHand[], int& toHandSize, const string& face) 
 {
-    for (int i = 0; i < fromHandSize; i++)
+    bool found = false;
+    for (int i = 0; i < fromHandSize; i++) 
     {
-        if (fromHand[i].face == face)
+        if (fromHand[i].face == face) 
         {
             toHand[toHandSize++] = fromHand[i];
-
-            for (int j = i; j < fromHandSize-1; j++)
+            
+            for (int j = i; j < fromHandSize - 1; j++) 
             {
                 fromHand[j] = fromHand[j + 1];
             }
             fromHandSize--;
-            return true;
+            i--;
+            found = true;
         }
     }
-    return false;
+    return found;
 }
 
-//to be added
 //Func deal cards to players, 6 cards
-bool dealCards()
+void dealCards(Card deck[], int &deckSize, Card playerHand[], int& playerHandSize, Card computerHand[], int& computerHandSize)
 {
-    return true;
+    playerHandSize = 0;
+    computerHandSize = 0;
+
+    for (int i = 0; i < START_HAND_SIZE; i++)
+    {
+        playerHand[playerHandSize++] = deck[--deckSize];
+        computerHand[computerHandSize++] = deck[--deckSize];
+    }
+}
+
+void drawCardDeck(Card playerHand[], int& playerHandSize, Card deck[], int& deckSize)
+{
+    playerHand[playerHandSize++] = deck[--deckSize];
 }
 
 int main()
@@ -106,21 +114,79 @@ int main()
 
     createDeck(deck, deckSize);
     shuffleDeck(deck, deckSize);
-    //dealCards();
+    dealCards(deck, deckSize, playerHand, playerHandSize, computerHand, computerHandSize);
 
     bool playerTurn = true;
+    string requestedFace;
 
     while (true)
     {
-        if (checkWinner(playerHandSize))
+        if (playerTurn) //players turn
         {
-            cout << "You lose!" << endl;
-            break;
+            cout << "\nYour Turn!\nYour hand: ";
+            showHand(playerHand, playerHandSize);
+            cout << "Conputer: ";
+            showHand(computerHand, computerHandSize);
+
+            cout << "Ask for a card face: ";
+            cin >> requestedFace;
+
+            if (drawCard(computerHand, computerHandSize, playerHand, playerHandSize, requestedFace))
+            {
+                cout << "Computer had the card(s). Your Turn!" << endl;
+            }
+            else
+            {
+                if (deckSize > 0)
+                {
+                    cout << "Go Fish! Drawing a card from the deck..." << endl;
+                    drawCardDeck(playerHand, playerHandSize,deck, deckSize);
+                }
+                else
+                {
+                    cout << "The deck is empty. Your turn ends." << endl;
+                    playerTurn = false;
+                }
+            }
+
+            if (checkWinner(computerHandSize, deckSize))
+            {
+                cout << "You won!" << endl; break;
+            }
         }
-        else if (checkWinner(computerHandSize))
+        else //computers turn
         {
-            cout << "You win!" << endl;
-            break;
+            cout << "\nComputer's turn..." << endl;
+
+            if (computerHandSize > 0) 
+            {
+                string computerRequest = computerHand[rand() % computerHandSize].face;
+                cout << "Computer asks for: " << computerRequest << endl;
+
+                if (drawCard(playerHand, playerHandSize, computerHand, computerHandSize, computerRequest)) 
+                {
+                    cout << "Computer took your card(s)! It goes again!" << endl;
+                }
+                else 
+                {
+                    if (deckSize > 0) 
+                    {
+                        cout << "Computer goes fishing..." << endl;
+                        computerHand[computerHandSize++] = deck[--deckSize];
+                    }
+                    else 
+                    {
+                        cout << "The deck is empty. Computer's turn ends." << endl;
+                        playerTurn = true;
+                    }
+                }
+            }
+
+            if (checkWinner(playerHandSize, deckSize)) 
+            {
+                cout << "Computer wins! Better luck next time!" << endl;
+                break;
+            }
         }
     }
 }
