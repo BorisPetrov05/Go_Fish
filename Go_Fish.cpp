@@ -61,25 +61,32 @@ bool checkWinner(const int handSize, const int deckSize)
 }
 
 //Func draw requested face/take a card from enemy
-//to be fixed
 bool drawCard(Card fromHand[], int& fromHandSize, Card toHand[], int& toHandSize, const string& face) 
 {
+    Card temp[MAX_CARDS];
+    int tempSize = 0;
     bool found = false;
-    for (int i = 0; i < fromHandSize; i++) 
+
+    for (int i = 0; i < fromHandSize; ++i) 
     {
         if (fromHand[i].face == face) 
         {
-            toHand[toHandSize++] = fromHand[i];
-            
-            for (int j = i; j < fromHandSize - 1; j++) 
-            {
-                fromHand[j] = fromHand[j + 1];
-            }
-            fromHandSize--;
-            i--;
+            temp[tempSize++] = fromHand[i];
             found = true;
         }
+        else 
+        {
+            fromHand[i - tempSize] = fromHand[i];
+        }
     }
+
+    fromHandSize -= tempSize;
+
+    for (int i = 0; i < tempSize; ++i) 
+    {
+        toHand[toHandSize++] = temp[i];
+    }
+
     return found;
 }
 
@@ -118,6 +125,8 @@ int main()
 
     bool playerTurn = true;
     string requestedFace;
+
+    cout << "Welcome to the game \"Go Fish\"!" << endl;
 
     while (true)
     {
