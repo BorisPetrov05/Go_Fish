@@ -1,9 +1,7 @@
 #include <iostream>
-#include <vector>
 #include <string>
 #include <cstdlib> //srand, rand
 #include <ctime> //time
-#include <algorithm>
 
 using namespace std;
 
@@ -20,11 +18,12 @@ struct Card
 
 const int MAX_CARDS = 52;
 const int START_HAND_SIZE = 6;
+const string faces[] = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
+const string suits[] = { "Hearts", "Diamonds", "Clubs", "Spades" };
+
 
 void createDeck(Card deck[], int& deckSize)
 {
-    string faces[] = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
-    string suits[] = { "Hearts", "Diamonds", "Clubs", "Spades" };
     deckSize = 0;
 
     for (int i = 0; i < size(faces); ++i) //13 faces
@@ -38,7 +37,7 @@ void createDeck(Card deck[], int& deckSize)
 
 void shuffleDeck(Card deck[], int deckSize)
 {
-    srand(static_cast<unsigned>(time(0))); //convert time_t to unsigned int
+    srand(static_cast<unsigned>(time(0))); //convert time_t to unsigned int and seed
     for (int i = 0; i < deckSize; i++)
     {
         int randIndex = rand() % deckSize; //random index
@@ -50,14 +49,14 @@ void showHand(Card hand[], int handSize)
 {
     for (int i = 0; i < handSize; i++)
     {
-        cout << hand[i].ToString() << ",  ";
+        cout << hand[i].ToString() << ' '; //temporary
     }
     cout << endl;
 }
 
 bool checkWinner(const int handSize, const int deckSize)
 {
-    return handSize == 0 && deckSize == 0;;
+    return handSize == 0 && deckSize == 0;
 }
 
 //Func draw requested face/take a card from enemy
@@ -103,9 +102,9 @@ void dealCards(Card deck[], int &deckSize, Card playerHand[], int& playerHandSiz
     }
 }
 
-void drawCardDeck(Card playerHand[], int& playerHandSize, Card deck[], int& deckSize)
+void drawCardDeck(Card Hand[], int& HandSize, Card deck[], int& deckSize)
 {
-    playerHand[playerHandSize++] = deck[--deckSize];
+    Hand[HandSize++] = deck[--deckSize];
 }
 
 int main()
@@ -126,21 +125,38 @@ int main()
     bool playerTurn = true;
     string requestedFace;
 
+    Card playerLastCard = playerHand[playerHandSize-1];
+    Card computerLastCard = computerHand[computerHandSize-1];
+
     cout << "Welcome to the game \"Go Fish\"!" << endl;
 
     while (true)
     {
         if (playerTurn) //players turn
         {
+            if (playerHandSize == 0)
+            {
+                if (deckSize > 0)
+                {
+                    cout << "You have no cards. Drawing a card from the deck..." << endl;
+                    drawCardDeck(playerHand, playerHandSize, deck, deckSize);
+                }
+                else
+                {
+                    cout << "You has no cards and the deck is empty. Your turn ends." << endl;
+                }
+            }
+
             cout << "\nYour Turn!\nYour hand: ";
             showHand(playerHand, playerHandSize);
-            cout << "Conputer: ";
+
+            cout << "Conputer: "; //test
             showHand(computerHand, computerHandSize);
 
             cout << "Ask for a card face: ";
             cin >> requestedFace;
 
-            if (drawCard(computerHand, computerHandSize, playerHand, playerHandSize, requestedFace))
+            if (drawCard(computerHand, computerHandSize, playerHand, playerHandSize, requestedFace)) //successfully drawn card
             {
                 cout << "Computer had the card(s). Your Turn!" << endl;
             }
@@ -150,6 +166,17 @@ int main()
                 {
                     cout << "Go Fish! Drawing a card from the deck..." << endl;
                     drawCardDeck(playerHand, playerHandSize,deck, deckSize);
+
+                    if (playerLastCard.face == requestedFace)
+                    {
+                        cout << "You drew a " << requestedFace << ". Your Turn!";
+                    }
+                    else 
+                    {
+                        string playerrLastCardFace = playerLastCard.face;
+                        cout << "You drew a " << playerrLastCardFace << ". Computer's turn!";
+                        playerTurn = false;
+                    }
                 }
                 else
                 {
@@ -167,12 +194,25 @@ int main()
         {
             cout << "\nComputer's turn..." << endl;
 
+            if (computerHandSize == 0)
+            {
+                if (deckSize > 0)
+                {
+                    cout << "Computer has no cards. It draws a card from the deck..." << endl;
+                    drawCardDeck(computerHand, computerHandSize, deck, deckSize);
+                }
+                else
+                {
+                    cout << "Computer has no cards and the deck is empty. Computer's turn ends." << endl;
+                }
+            }
+
             if (computerHandSize > 0) 
             {
-                string computerRequest = computerHand[rand() % computerHandSize].face;
+                string computerRequest = faces[rand() % 13];
                 cout << "Computer asks for: " << computerRequest << endl;
 
-                if (drawCard(playerHand, playerHandSize, computerHand, computerHandSize, computerRequest)) 
+                if (drawCard(playerHand, playerHandSize, computerHand, computerHandSize, computerRequest)) //draws card from player
                 {
                     cout << "Computer took your card(s)! It goes again!" << endl;
                 }
@@ -181,7 +221,18 @@ int main()
                     if (deckSize > 0) 
                     {
                         cout << "Computer goes fishing..." << endl;
-                        computerHand[computerHandSize++] = deck[--deckSize];
+                        drawCardDeck(computerHand, computerHandSize, deck, deckSize);
+
+                        if (computerLastCard.face == computerRequest)
+                        {
+                            cout << "Computer drew a " << computerRequest << ". It goes again!" << endl;
+                        }
+                        else
+                        {
+                            string computerLastCardFace = computerLastCard.face;
+                            cout << "Computer drew a " << computerLastCardFace << "." << endl;
+                            playerTurn = true;
+                        }
                     }
                     else 
                     {
