@@ -41,7 +41,7 @@ void showHand(Card hand[], int handSize)
     cout << endl;
 }
 
-bool checkWinner(const int handSize, const int deckSize)
+bool checkWinner(const int handSize, const int deckSize) //incorrect
 {
     return handSize == 0 && deckSize == 0;
 }

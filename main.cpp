@@ -28,9 +28,17 @@ int main()
 
     while (true)
     {
-        if (playerTurn) //players turn
+        //players turn
+        if (playerTurn) 
         {
-            if (playerHandSize == 0)
+            cout << "\nYour Turn!\nYour hand: ";
+            showHand(playerHand, playerHandSize);
+
+            cout << "Conputer: "; //test
+            showHand(computerHand, computerHandSize);
+
+            //actions if player has no cards in hand
+            if (playerHandSize == 0) 
             {
                 if (deckSize > 0)
                 {
@@ -43,19 +51,16 @@ int main()
                 }
             }
 
-            cout << "\nYour Turn!\nYour hand: ";
-            showHand(playerHand, playerHandSize);
-
-            cout << "Conputer: "; //test
-            showHand(computerHand, computerHandSize);
-
+            //turn begins
             cout << "Ask for a card face: ";
             cin >> requestedFace;
 
-            if (drawCard(computerHand, computerHandSize, playerHand, playerHandSize, requestedFace)) //successfully drawn card
+            //successfully drawn card from computer
+            if (drawCard(computerHand, computerHandSize, playerHand, playerHandSize, requestedFace)) 
             {
                 cout << "Computer had the card(s). Your Turn!" << endl;
             }
+            //unsuccessfully drawn card from computer
             else
             {
                 if (deckSize > 0)
@@ -63,11 +68,11 @@ int main()
                     cout << "Go Fish! Drawing a card from the deck..." << endl;
                     drawCardDeck(playerHand, playerHandSize, deck, deckSize);
 
-                    if (playerLastCard.face == requestedFace)
+                    if (playerLastCard.face == requestedFace) //player draws the requested card from deck
                     {
                         cout << "You drew a " << requestedFace << ". Your Turn!";
                     }
-                    else
+                    else //player draws a card from deck and ends turn
                     {
                         string playerrLastCardFace = playerLastCard.face;
                         cout << "You drew a " << playerrLastCardFace << ". Computer's turn!";
@@ -86,10 +91,12 @@ int main()
                 cout << "You won!" << endl; break;
             }
         }
-        else //computers turn
+        //computers turn
+        else
         {
             cout << "\nComputer's turn..." << endl;
 
+            //actions if computer has no cards in hand
             if (computerHandSize == 0)
             {
                 if (deckSize > 0)
@@ -102,16 +109,19 @@ int main()
                     cout << "Computer has no cards and the deck is empty. Computer's turn ends." << endl;
                 }
             }
-
+            
+            //turn begins
             if (computerHandSize > 0)
             {
                 string computerRequest = faces[rand() % 13];
                 cout << "Computer asks for: " << computerRequest << endl;
 
+                //successfully drawn card from player
                 if (drawCard(playerHand, playerHandSize, computerHand, computerHandSize, computerRequest)) //draws card from player
                 {
                     cout << "Computer took your card(s)! It goes again!" << endl;
                 }
+                //unsuccessfully drawn card from player
                 else
                 {
                     if (deckSize > 0)
@@ -119,11 +129,11 @@ int main()
                         cout << "Computer goes fishing..." << endl;
                         drawCardDeck(computerHand, computerHandSize, deck, deckSize);
 
-                        if (computerLastCard.face == computerRequest)
+                        if (computerLastCard.face == computerRequest) //computer draws the requested card from deck
                         {
                             cout << "Computer drew a " << computerRequest << ". It goes again!" << endl;
                         }
-                        else
+                        else //computer draws card from deck and ends turn
                         {
                             string computerLastCardFace = computerLastCard.face;
                             cout << "Computer drew a " << computerLastCardFace << "." << endl;
