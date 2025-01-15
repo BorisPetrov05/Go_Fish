@@ -22,7 +22,7 @@ void createDeck(Card deck[], int& deckSize)
     }
 }
 
-void shuffleDeck(Card deck[], int deckSize)
+void shuffleDeck(Card deck[], const int& deckSize)
 {
     srand(static_cast<unsigned>(time(0))); //convert time_t to unsigned int and seed
     for (int i = 0; i < deckSize; i++)
@@ -32,7 +32,7 @@ void shuffleDeck(Card deck[], int deckSize)
     }
 }
 
-void showHand(Card hand[], int handSize)
+void showHand(Card hand[], const int& handSize)
 {
     for (int i = 0; i < handSize; i++)
     {
@@ -41,7 +41,21 @@ void showHand(Card hand[], int handSize)
     cout << endl;
 }
 
-bool checkWinner(const int handSize, const int deckSize) //incorrect
+//Func finds if there are 4 cards of a face in a hand
+bool has4ofFace(Card hand[], const int& handSize, string neededFace)
+{
+    int counter = 0;
+    for (int i = 0; i < handSize; i++)
+    {
+        if (hand[i].face == neededFace)
+        {
+            counter++;
+        }
+    }
+    return counter == 4;
+}
+
+bool checkWinner(const int handSize, const int& deckSize) //incorrect
 {
     return handSize == 0 && deckSize == 0;
 }
