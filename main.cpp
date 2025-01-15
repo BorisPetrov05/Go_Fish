@@ -44,6 +44,10 @@ int main()
                 {
                     cout << "You have no cards. Drawing a card from the deck..." << endl;
                     drawCardDeck(playerHand, playerHandSize, deck, deckSize);
+                    /*if (has4ofFace(playerHand, playerHandSize, playerLastCard.face))
+                    {
+
+                    }*/
                 }
                 else
                 {

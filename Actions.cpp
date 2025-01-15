@@ -41,23 +41,52 @@ void showHand(Card hand[], const int& handSize)
     cout << endl;
 }
 
-//Func finds if there are 4 cards of a face in a hand
-bool has4ofFace(Card hand[], const int& handSize, string neededFace)
+//Func that removes all instances of a face if there are 4 in a hand
+bool removeSetFaceIfComplete(Card hand[], int& handSize, const string& face, int& WonFaces)
 {
     int counter = 0;
+    Card newHand[MAX_CARDS];
+    int newHandSize = 0;
+
     for (int i = 0; i < handSize; i++)
     {
-        if (hand[i].face == neededFace)
+        if (hand[i].face == face)
         {
             counter++;
         }
     }
-    return counter == 4;
+    
+    if (counter == 4)
+    {
+        for (int i = 0; i < handSize; i++)
+        {
+            if (hand[i].face != face)
+            {
+                newHand[newHandSize++] = hand[i];
+            }
+        }
+
+        handSize = newHandSize;
+
+        for (int i = 0; i < handSize; i++)
+        {
+            hand[i] = newHand[i];
+        }
+
+        WonFaces++;
+        return true;
+    }
+    return false;
+    
 }
 
-bool checkWinner(const int handSize, const int& deckSize) //incorrect
+bool checkWinner(const int handSize, const int& deckSize, const int& facesWon, const int& facesWonEnemy) //incorrect
 {
-    return handSize == 0 && deckSize == 0;
+    if (handSize == 0 && deckSize == 0)
+    {
+        return facesWon > facesWonEnemy;
+    }
+    return 0;
 }
 
 //Func draw requested face/take a card from enemy
