@@ -24,6 +24,13 @@ int main()
     Card playerLastCard = playerHand[playerHandSize - 1];
     Card computerLastCard = computerHand[computerHandSize - 1];
 
+    string playerfacesWon[MAX_CARDS];
+    int playerFacesWonNumber = 0;
+
+    string computerFacesWon[MAX_CARDS];
+    int computerFacesWonNumber = 0;
+
+
     cout << "Welcome to the game \"Go Fish\"!" << endl;
 
     while (true)
@@ -44,14 +51,15 @@ int main()
                 {
                     cout << "You have no cards. Drawing a card from the deck..." << endl;
                     drawCardDeck(playerHand, playerHandSize, deck, deckSize);
-                    /*if (has4ofFace(playerHand, playerHandSize, playerLastCard.face))
+                    if (removeSetFaceIfComplete(playerHand, playerHandSize, playerLastCard.face, playerfacesWon, playerFacesWonNumber))
                     {
-
-                    }*/
+                        cout << "You completed a set of " << requestedFace << "s!" << endl;
+                    }
                 }
                 else
                 {
                     cout << "You has no cards and the deck is empty. Your turn ends." << endl;
+                    //cout << "=================================================================";
                 }
             }
 
@@ -63,6 +71,10 @@ int main()
             if (drawCard(computerHand, computerHandSize, playerHand, playerHandSize, requestedFace)) 
             {
                 cout << "Computer had the card(s). Your Turn!" << endl;
+                if (removeSetFaceIfComplete(playerHand, playerHandSize, playerLastCard.face, playerfacesWon, playerFacesWonNumber))
+                {
+                    cout << "You completed a set of " << requestedFace << "s!" << endl;
+                }
             }
             //unsuccessfully drawn card from computer
             else
@@ -75,22 +87,29 @@ int main()
                     if (playerLastCard.face == requestedFace) //player draws the requested card from deck
                     {
                         cout << "You drew a " << requestedFace << ". Your Turn!";
+                        //cout << "=================================================================";
                     }
                     else //player draws a card from deck and ends turn
                     {
                         string playerrLastCardFace = playerLastCard.face;
                         cout << "You drew a " << playerrLastCardFace << ". Computer's turn!";
+                        //cout << "=================================================================";
                         playerTurn = false;
+                    }
+                    if (removeSetFaceIfComplete(playerHand, playerHandSize, playerLastCard.face, playerfacesWon, playerFacesWonNumber))
+                    {
+                        cout << "You completed a set of " << requestedFace << "s!" << endl;
                     }
                 }
                 else
                 {
                     cout << "The deck is empty. Your turn ends." << endl;
+                    //cout << "=================================================================";
                     playerTurn = false;
                 }
             }
 
-            if (checkWinner(computerHandSize, deckSize))
+            if (checkWinner(computerHandSize, deckSize, playerFacesWonNumber, computerFacesWonNumber))
             {
                 cout << "You won!" << endl; break;
             }
@@ -107,10 +126,15 @@ int main()
                 {
                     cout << "Computer has no cards. It draws a card from the deck..." << endl;
                     drawCardDeck(computerHand, computerHandSize, deck, deckSize);
+                    if (removeSetFaceIfComplete(computerHand, computerHandSize, computerLastCard.face, computerFacesWon, computerFacesWonNumber))
+                    {
+                        cout << "Computer completed a set of " << requestedFace << "s!" << endl;
+                    }
                 }
                 else
                 {
                     cout << "Computer has no cards and the deck is empty. Computer's turn ends." << endl;
+                    //cout << "=================================================================";
                 }
             }
             
@@ -124,6 +148,10 @@ int main()
                 if (drawCard(playerHand, playerHandSize, computerHand, computerHandSize, computerRequest)) //draws card from player
                 {
                     cout << "Computer took your card(s)! It goes again!" << endl;
+                    if (removeSetFaceIfComplete(computerHand, computerHandSize, computerLastCard.face, computerFacesWon, computerFacesWonNumber))
+                    {
+                        cout << "Computer completed a set of " << requestedFace << "s!" << endl;
+                    }
                 }
                 //unsuccessfully drawn card from player
                 else
@@ -141,18 +169,24 @@ int main()
                         {
                             string computerLastCardFace = computerLastCard.face;
                             cout << "Computer drew a " << computerLastCardFace << "." << endl;
+                            //cout << "=================================================================";
                             playerTurn = true;
+                        }
+                        if (removeSetFaceIfComplete(computerHand, computerHandSize, computerLastCard.face, computerFacesWon, computerFacesWonNumber))
+                        {
+                            cout << "Computer completed a set of " << requestedFace << "s!" << endl;
                         }
                     }
                     else
                     {
                         cout << "The deck is empty. Computer's turn ends." << endl;
+                        //cout << "=================================================================";
                         playerTurn = true;
                     }
                 }
             }
 
-            if (checkWinner(playerHandSize, deckSize))
+            if (checkWinner(playerHandSize, deckSize, computerFacesWonNumber, playerFacesWonNumber))
             {
                 cout << "Computer wins! Better luck next time!" << endl;
                 break;

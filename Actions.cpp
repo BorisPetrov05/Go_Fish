@@ -42,7 +42,7 @@ void showHand(Card hand[], const int& handSize)
 }
 
 //Func that removes all instances of a face if there are 4 in a hand
-bool removeSetFaceIfComplete(Card hand[], int& handSize, const string& face, int& WonFaces)
+bool removeSetFaceIfComplete(Card hand[], int& handSize, const string& face, string facesWon[],int& WonFaces)
 {
     int counter = 0;
     Card newHand[MAX_CARDS];
@@ -73,14 +73,14 @@ bool removeSetFaceIfComplete(Card hand[], int& handSize, const string& face, int
             hand[i] = newHand[i];
         }
 
-        WonFaces++;
+        facesWon[WonFaces++] = face;
         return true;
     }
     return false;
     
 }
 
-bool checkWinner(const int handSize, const int& deckSize, const int& facesWon, const int& facesWonEnemy) //incorrect
+bool checkWinner(const int handSize, const int& deckSize, const int& facesWon, const int& facesWonEnemy)
 {
     if (handSize == 0 && deckSize == 0)
     {
