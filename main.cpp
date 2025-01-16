@@ -60,10 +60,10 @@ void handlePlayerTurn
 }
 
 void handleComputerTurn
-(Card computerHand[], int& computerHandSize, 
-    Card playerHand[], int& playerHandSize, 
-    Card deck[], int& deckSize, 
-    string computerFacesWon[], int& computerFacesWonNumber, bool& playerTurn, Card computerLastCard)
+(Card computerHand[], int& computerHandSize,
+    Card playerHand[], int& playerHandSize,
+    Card deck[], int& deckSize,
+    string computerFacesWon[], string playerFacesWon[], int& computerFacesWonNumber, bool& playerTurn, Card computerLastCard)
 {
     cout << "\n\nComputer's turn..." << endl;
     cout << "Computer's points: " << computerFacesWonNumber << endl;
@@ -84,7 +84,26 @@ void handleComputerTurn
 
     if (computerHandSize > 0)
     {
-        string computerRequest = faces[rand() % 13];
+        string computerRequest;
+
+        //makes a random face until it picks a face that hasn't been won
+        while (true) 
+        {
+            bool found = false;
+            computerRequest = faces[rand() % 13];
+            for (int i = 0; i < computerFacesWonNumber; i++)
+            {
+                if (computerFacesWon[i] == computerRequest || playerFacesWon[i] == computerRequest)
+                {
+                    found = true;
+                }
+            }
+            if (found == false)
+            {
+                break;
+            }
+        }
+
         cout << "Computer asks for: " << computerRequest << endl;
 
         if (drawCard(playerHand, playerHandSize, computerHand, computerHandSize, computerRequest))
@@ -119,6 +138,11 @@ void handleComputerTurn
     }
 }
 
+void handlePlayerTurnSecondStage()
+{
+
+}
+
 int main()
 {
     Card deck[MAX_CARDS];
@@ -137,7 +161,7 @@ int main()
     bool playerTurn = true;
     string requestedFace;
 
-    string playerfacesWon[MAX_CARDS];
+    string playerFacesWon[MAX_CARDS];
     int playerFacesWonNumber = 0;
 
     string computerFacesWon[MAX_CARDS];
@@ -155,19 +179,30 @@ int main()
             handlePlayerTurn(playerHand, playerHandSize, 
                 computerHand, computerHandSize, 
                 deck, deckSize,
-                playerfacesWon, playerFacesWonNumber, playerTurn, requestedFace, playerLastCard);
+                playerFacesWon, playerFacesWonNumber, playerTurn, requestedFace, playerLastCard);
         }
         else
         {
             handleComputerTurn(computerHand, computerHandSize, 
                 playerHand, playerHandSize, 
-                deck, deckSize, computerFacesWon, computerFacesWonNumber, playerTurn, computerLastCard);
+                deck, deckSize, computerFacesWon, playerFacesWon, computerFacesWonNumber, playerTurn, computerLastCard);
         }
 
-        if (checkWinner(computerHandSize, deckSize, playerFacesWonNumber, computerFacesWonNumber))
+        if (checkIfSecondStage(computerHandSize, deckSize, playerFacesWonNumber, computerFacesWonNumber))
         {
-            cout << (playerTurn ? "You won!" : "Computer wins! Better luck next time!") << endl;
+            cout << ("\nEntering the second stage of the game!\n") << endl;
             break;
+        }
+    }
+    while (true) //second stage
+    {
+        if (playerTurn)
+        {
+
+        }
+        else
+        {
+
         }
     }
 }

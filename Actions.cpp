@@ -9,6 +9,7 @@ using namespace std;
 const string faces[] = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
 const string suits[] = { "Hearts", "Diamonds", "Clubs", "Spades" };
 const int CARDS_IN_SET = 4;
+const int MAX_SETS = 13;
 
 void createDeck(Card deck[], int& deckSize)
 {
@@ -117,14 +118,11 @@ void checkAndRemoveSets(Card hand[], int& handSize, string facesWon[], int& face
     }
 }
 
-bool checkWinner(const int handSize, const int& deckSize, const int& facesWon, const int& facesWonEnemy)
+bool checkIfSecondStage(const int handSize, const int& deckSize, const int& facesWon, const int& facesWonEnemy)
 {
-    if (handSize == 0 && deckSize == 0)
-    {
-        return facesWon > facesWonEnemy;
-    }
-    return 0;
+    return handSize == 0 && deckSize == 0;
 }
+
 
 //Func draw requested face/take a card from enemy
 bool drawCard(Card fromHand[], int& fromHandSize, Card toHand[], int& toHandSize, const string& face)
@@ -133,7 +131,7 @@ bool drawCard(Card fromHand[], int& fromHandSize, Card toHand[], int& toHandSize
     int tempSize = 0;
     bool found = false;
 
-    for (int i = 0; i < fromHandSize; ++i)
+    for (int i = 0; i < fromHandSize; i++)
     {
         if (fromHand[i].face == face)
         {
@@ -148,7 +146,7 @@ bool drawCard(Card fromHand[], int& fromHandSize, Card toHand[], int& toHandSize
 
     fromHandSize -= tempSize;
 
-    for (int i = 0; i < tempSize; ++i)
+    for (int i = 0; i < tempSize; i++)
     {
         toHand[toHandSize++] = temp[i];
     }
@@ -172,4 +170,35 @@ void dealCards(Card deck[], int& deckSize, Card playerHand[], int& playerHandSiz
 void drawCardDeck(Card Hand[], int& HandSize, Card deck[], int& deckSize)
 {
     Hand[HandSize++] = deck[--deckSize];
+}
+
+//Second phase of the game:
+
+//Func draw a set from a player/take a set from enemy
+bool drawSet(string fromPlayerSets[], int& playerSetsSize, string toEnemySets[], int& toEnemySetsSize, const string& face)
+{
+    string temp[MAX_SETS];
+    int tempSize = 0;
+    bool found = false;
+
+    for (int i = 0; i < playerSetsSize; i++)
+    {
+        if (fromPlayerSets[i] == face)
+        {
+            temp[tempSize++] = fromPlayerSets[i];
+            found = true;
+        }
+        else
+        {
+            fromPlayerSets[i - tempSize] = fromPlayerSets[i];
+        }
+    }
+    fromPlayerSets -= tempSize;
+
+    for (int i = 0; i < tempSize; i++)
+    {
+        toEnemySets[toEnemySetsSize++] = temp[i];
+    }
+
+    return found;
 }

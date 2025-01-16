@@ -9,7 +9,7 @@ void shuffleDeck(Card deck[], const int& deckSize);
 
 void showHand(Card hand[], const int& handSize);
 
-bool checkWinner(const int handSize, const int& deckSize, const int& facesWon, const int& facesWonEnemy);
+bool checkIfSecondStage(const int handSize, const int& deckSize, const int& facesWon, const int& facesWonEnemy);
 
 bool drawCard(Card fromHand[], int& fromHandSize, Card toHand[], int& toHandSize, const std::string& face);
 
@@ -20,5 +20,10 @@ void drawCardDeck(Card Hand[], int& HandSize, Card deck[], int& deckSize);
 bool removeSetFaceIfComplete(Card hand[], int& handSize, const std::string& face, std::string facesWon[], int& WonFaces);
 
 void checkAndRemoveSets(Card hand[], int& handSize, std::string facesWon[], int& facesWonNumber);
+
+//second stage:
+
+bool drawSet(std::string fromPlayerSets[], int& playerSetsSize, std::string toEnemySets[], int& toEnemySetsSize, const std::string& face);
+
 
 #endif
