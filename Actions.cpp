@@ -127,9 +127,19 @@ bool checkIfSecondStage(const int handSize, const int& deckSize, const int& face
 //Func draw requested face/take a card from enemy
 bool drawCard(Card fromHand[], int& fromHandSize, Card toHand[], int& toHandSize, const string& face)
 {
+    bool found = false;
+
+    for (int i = 0; i < toHandSize; i++)
+    {
+        if (face != toHand[i].face)
+        {
+            cout << "You can't ask for a face you don't have!";
+            return false;
+        }
+    }
+    
     Card temp[MAX_CARDS];
     int tempSize = 0;
-    bool found = false;
 
     for (int i = 0; i < fromHandSize; i++)
     {

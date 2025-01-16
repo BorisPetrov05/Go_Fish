@@ -9,7 +9,7 @@ void handlePlayerTurn
     Card deck[], int& deckSize, 
     string playerFacesWon[], int& playerFacesWonNumber, bool& playerTurn, string& requestedFace)
 {
-    cout << "\nYour Turn!\nYour points: " << playerFacesWonNumber << "\nYour hand:\n";
+    cout << "\nYour Turn!\nYour faces won: " << playerFacesWonNumber << "\nYour hand:\n";
     showHand(playerHand, playerHandSize);
 
     if (playerHandSize == 0)
@@ -70,7 +70,7 @@ void handleComputerTurn
     string computerFacesWon[], string playerFacesWon[], int& computerFacesWonNumber, bool& playerTurn)
 {
     cout << "\n\nComputer's turn..." << endl;
-    cout << "Computer's points: " << computerFacesWonNumber << endl;
+    cout << "Computer's faces won: " << computerFacesWonNumber << endl;
 
     if (computerHandSize == 0)
     {
@@ -145,7 +145,9 @@ void handleComputerTurn
     }
 }
 
-void handlePlayerTurnSecondStage()
+void handlePlayerTurnSecondStage(string playerFacesWon[], int& playerFacesWonNumber, 
+    string computerFacesWon, int& computerFacesWonNumber, 
+    bool playerTurn)
 {
 
 }
@@ -184,7 +186,6 @@ int main()
                 computerHand, computerHandSize, 
                 deck, deckSize,
                 playerFacesWon, playerFacesWonNumber, playerTurn, requestedFace);
-
         }
         else
         {
