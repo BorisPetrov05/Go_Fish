@@ -21,9 +21,11 @@ bool removeSetFaceIfComplete(Card hand[], int& handSize, const std::string& face
 
 void checkAndRemoveSets(Card hand[], int& handSize, std::string facesWon[], int& facesWonNumber);
 
+bool checkIfHasCard(Card Hand[], int& HandSize, const std::string& face);
+
 //second stage:
 
-bool drawSet(std::string fromPlayerSets[], int& playerSetsSize, std::string toEnemySets[], int& toEnemySetsSize, const std::string& face);
+bool drawSet(std::string fromPlayerSets[], int& playerSetsSize, std::string toPlayerSets[], int& toPlayerSetsSize, const std::string& face);
 
 
 #endif

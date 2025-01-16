@@ -129,10 +129,13 @@
   <ItemGroup>
     <ClCompile Include="Actions.cpp" />
     <ClCompile Include="Actions.h" />
+    <ClCompile Include="ComputerTurn.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PlayerTurn.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Card.h" />
+    <ClInclude Include="Turns.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
