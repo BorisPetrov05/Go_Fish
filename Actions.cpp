@@ -167,9 +167,9 @@ void dealCards(Card deck[], int& deckSize, Card playerHand[], int& playerHandSiz
     }
 }
 
-void drawCardDeck(Card Hand[], int& HandSize, Card deck[], int& deckSize)
+void drawCardDeck(Card hand[], int& HandSize, Card deck[], int& deckSize)
 {
-    Hand[HandSize++] = deck[--deckSize];
+    hand[HandSize++] = deck[--deckSize];
 }
 
 //Second phase of the game:

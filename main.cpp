@@ -7,7 +7,7 @@ void handlePlayerTurn
 (Card playerHand[], int& playerHandSize, 
     Card computerHand[], int& computerHandSize, 
     Card deck[], int& deckSize, 
-    string playerFacesWon[], int& playerFacesWonNumber, bool& playerTurn, string& requestedFace, Card playerLastCard)
+    string playerFacesWon[], int& playerFacesWonNumber, bool& playerTurn, string& requestedFace)
 {
     cout << "\nYour Turn!\nYour points: " << playerFacesWonNumber << "\nYour hand:\n";
     showHand(playerHand, playerHandSize);
@@ -40,13 +40,17 @@ void handlePlayerTurn
         {
             cout << "Go Fish! Drawing a card from the deck..." << endl;
             drawCardDeck(playerHand, playerHandSize, deck, deckSize);
-            if (playerLastCard.face == requestedFace)
+
+            string faceOfDrawnCard = playerHand[playerHandSize - 1].face;
+            string faceOfLastCard = playerHand[playerHandSize - 2].face;
+
+            if (faceOfLastCard == requestedFace)
             {
-                cout << "You drew a " << requestedFace << ". Your Turn!";
+                cout << "You drew a " << faceOfLastCard << ". Your Turn!";
             }
             else
             {
-                cout << "You drew a " << requestedFace << ". Computer's turn!";
+                cout << "You drew a " << faceOfDrawnCard << ". Computer's turn!";
                 playerTurn = false;
             }
             checkAndRemoveSets(playerHand, playerHandSize, playerFacesWon, playerFacesWonNumber);
@@ -63,7 +67,7 @@ void handleComputerTurn
 (Card computerHand[], int& computerHandSize,
     Card playerHand[], int& playerHandSize,
     Card deck[], int& deckSize,
-    string computerFacesWon[], string playerFacesWon[], int& computerFacesWonNumber, bool& playerTurn, Card computerLastCard)
+    string computerFacesWon[], string playerFacesWon[], int& computerFacesWonNumber, bool& playerTurn)
 {
     cout << "\n\nComputer's turn..." << endl;
     cout << "Computer's points: " << computerFacesWonNumber << endl;
@@ -118,13 +122,16 @@ void handleComputerTurn
                 cout << "Computer goes fishing..." << endl;
                 drawCardDeck(computerHand, computerHandSize, deck, deckSize);
 
-                if (computerLastCard.face == computerRequest)
+                string faceOfDrawnCard = computerHand[computerHandSize - 1].face;
+                string faceOfLastCard = computerHand[computerHandSize - 2].face;
+
+                if (faceOfLastCard == computerRequest)
                 {
-                    cout << "Computer drew a " << computerRequest << ". It goes again!" << endl;
+                    cout << "Computer drew a " << faceOfLastCard << ". It goes again!" << endl;
                 }
                 else
                 {
-                    cout << "Computer drew a " << computerRequest << "." << endl;
+                    cout << "Computer drew a " << faceOfDrawnCard << "." << endl;
                     playerTurn = true;
                 }
                 checkAndRemoveSets(computerHand, computerHandSize, computerFacesWon, computerFacesWonNumber);
@@ -167,9 +174,6 @@ int main()
     string computerFacesWon[MAX_CARDS];
     int computerFacesWonNumber = 0;
 
-    Card playerLastCard = playerHand[playerHandSize - 1];
-    Card computerLastCard = computerHand[computerHandSize - 1];
-
     cout << "Welcome to the game \"Go Fish\"!" << endl;
 
     while (true)
@@ -179,13 +183,14 @@ int main()
             handlePlayerTurn(playerHand, playerHandSize, 
                 computerHand, computerHandSize, 
                 deck, deckSize,
-                playerFacesWon, playerFacesWonNumber, playerTurn, requestedFace, playerLastCard);
+                playerFacesWon, playerFacesWonNumber, playerTurn, requestedFace);
+
         }
         else
         {
             handleComputerTurn(computerHand, computerHandSize, 
                 playerHand, playerHandSize, 
-                deck, deckSize, computerFacesWon, playerFacesWon, computerFacesWonNumber, playerTurn, computerLastCard);
+                deck, deckSize, computerFacesWon, playerFacesWon, computerFacesWonNumber, playerTurn);
         }
 
         if (checkIfSecondStage(computerHandSize, deckSize, playerFacesWonNumber, computerFacesWonNumber))
@@ -198,10 +203,11 @@ int main()
     {
         if (playerTurn)
         {
-
+            cout << "second stage";
         }
         else
         {
+            cout << "second stage";
 
         }
     }
