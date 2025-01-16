@@ -38,7 +38,7 @@ int main()
         //players turn
         if (playerTurn) 
         {
-            cout << "\nYour Turn!\nYour hand:\n";
+            cout << "\nYour Turn!\nYour points: "<< playerFacesWonNumber <<"\nYour hand:\n";
             showHand(playerHand, playerHandSize);
 
             cout << "Conputer: "; //test
@@ -51,15 +51,11 @@ int main()
                 {
                     cout << "You have no cards. Drawing a card from the deck..." << endl;
                     drawCardDeck(playerHand, playerHandSize, deck, deckSize);
-                    if (removeSetFaceIfComplete(playerHand, playerHandSize, playerLastCard.face, playerfacesWon, playerFacesWonNumber))
-                    {
-                        cout << "You completed a set of " << requestedFace << "s!" << endl;
-                    }
+                    checkAndRemoveSets(playerHand, playerHandSize, playerfacesWon, playerFacesWonNumber);
                 }
                 else
                 {
                     cout << "You has no cards and the deck is empty. Your turn ends." << endl;
-                    //cout << "=================================================================";
                 }
             }
 
@@ -71,10 +67,7 @@ int main()
             if (drawCard(computerHand, computerHandSize, playerHand, playerHandSize, requestedFace)) 
             {
                 cout << "Computer had the card(s). Your Turn!" << endl;
-                if (removeSetFaceIfComplete(playerHand, playerHandSize, playerLastCard.face, playerfacesWon, playerFacesWonNumber))
-                {
-                    cout << "You completed a set of " << requestedFace << "s!" << endl;
-                }
+                checkAndRemoveSets(playerHand, playerHandSize, playerfacesWon, playerFacesWonNumber);
             }
             //unsuccessfully drawn card from computer
             else
@@ -87,24 +80,18 @@ int main()
                     if (playerLastCard.face == requestedFace) //player draws the requested card from deck
                     {
                         cout << "You drew a " << requestedFace << ". Your Turn!";
-                        //cout << "=================================================================";
                     }
                     else //player draws a card from deck and ends turn
                     {
                         string playerrLastCardFace = playerLastCard.face;
                         cout << "You drew a " << playerrLastCardFace << ". Computer's turn!";
-                        //cout << "=================================================================";
                         playerTurn = false;
                     }
-                    if (removeSetFaceIfComplete(playerHand, playerHandSize, playerLastCard.face, playerfacesWon, playerFacesWonNumber))
-                    {
-                        cout << "You completed a set of " << requestedFace << "s!" << endl;
-                    }
+                    checkAndRemoveSets(playerHand, playerHandSize, playerfacesWon, playerFacesWonNumber);
                 }
                 else
                 {
                     cout << "The deck is empty. Your turn ends." << endl;
-                    //cout << "=================================================================";
                     playerTurn = false;
                 }
             }
@@ -118,6 +105,7 @@ int main()
         else
         {
             cout << "\n\nComputer's turn..." << endl;
+            cout << "Computer's points: " << computerFacesWonNumber << endl;
 
             //actions if computer has no cards in hand
             if (computerHandSize == 0)
@@ -126,15 +114,12 @@ int main()
                 {
                     cout << "Computer has no cards. It draws a card from the deck..." << endl;
                     drawCardDeck(computerHand, computerHandSize, deck, deckSize);
-                    if (removeSetFaceIfComplete(computerHand, computerHandSize, computerLastCard.face, computerFacesWon, computerFacesWonNumber))
-                    {
-                        cout << "Computer completed a set of " << requestedFace << "s!" << endl;
-                    }
+                    checkAndRemoveSets(computerHand, computerHandSize, computerFacesWon, computerFacesWonNumber);
+
                 }
                 else
                 {
                     cout << "Computer has no cards and the deck is empty. Computer's turn ends." << endl;
-                    //cout << "=================================================================";
                 }
             }
             
@@ -148,10 +133,7 @@ int main()
                 if (drawCard(playerHand, playerHandSize, computerHand, computerHandSize, computerRequest)) //draws card from player
                 {
                     cout << "Computer took your card(s)! It goes again!" << endl;
-                    if (removeSetFaceIfComplete(computerHand, computerHandSize, computerLastCard.face, computerFacesWon, computerFacesWonNumber))
-                    {
-                        cout << "Computer completed a set of " << requestedFace << "s!" << endl;
-                    }
+                    checkAndRemoveSets(computerHand, computerHandSize, computerFacesWon, computerFacesWonNumber);
                 }
                 //unsuccessfully drawn card from player
                 else
@@ -169,18 +151,13 @@ int main()
                         {
                             string computerLastCardFace = computerLastCard.face;
                             cout << "Computer drew a " << computerLastCardFace << "." << endl;
-                            //cout << "=================================================================";
                             playerTurn = true;
                         }
-                        if (removeSetFaceIfComplete(computerHand, computerHandSize, computerLastCard.face, computerFacesWon, computerFacesWonNumber))
-                        {
-                            cout << "Computer completed a set of " << requestedFace << "s!" << endl;
-                        }
+                        checkAndRemoveSets(computerHand, computerHandSize, computerFacesWon, computerFacesWonNumber);
                     }
                     else
                     {
                         cout << "The deck is empty. Computer's turn ends." << endl;
-                        //cout << "=================================================================";
                         playerTurn = true;
                     }
                 }

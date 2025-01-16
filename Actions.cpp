@@ -69,12 +69,11 @@ void showHand(Card hand[], const int& handSize)
 
 
 //Func that removes all instances of a face if there are 4 in a hand
-bool removeSetFaceIfComplete(Card hand[], int& handSize, const string& face, string facesWon[],int& WonFaces)
+bool removeSetFaceIfComplete(Card hand[], int& handSize, const string& face, string facesWon[], int& WonFaces)
 {
     int counter = 0;
-    Card newHand[MAX_CARDS];
-    int newHandSize = 0;
 
+    // Count the cards of the specified face
     for (int i = 0; i < handSize; i++)
     {
         if (hand[i].face == face)
@@ -82,29 +81,37 @@ bool removeSetFaceIfComplete(Card hand[], int& handSize, const string& face, str
             counter++;
         }
     }
-    
+
+    // If exactly 4 cards of the face are found, remove them
     if (counter == 4)
     {
+        int newHandSize = 0;
+
         for (int i = 0; i < handSize; i++)
         {
             if (hand[i].face != face)
             {
-                newHand[newHandSize++] = hand[i];
+                hand[newHandSize++] = hand[i];
             }
         }
 
         handSize = newHandSize;
 
-        for (int i = 0; i < handSize; i++)
-        {
-            hand[i] = newHand[i];
-        }
-
         facesWon[WonFaces++] = face;
+
+        cout << "\nA set was won: " << face << endl;
         return true;
     }
+
     return false;
-    
+}
+
+void checkAndRemoveSets(Card hand[], int& handSize, string facesWon[], int& facesWonNumber)
+{
+    for (const string& face : faces) 
+    {
+        removeSetFaceIfComplete(hand, handSize, face, facesWon, facesWonNumber);
+    }
 }
 
 bool checkWinner(const int handSize, const int& deckSize, const int& facesWon, const int& facesWonEnemy)
