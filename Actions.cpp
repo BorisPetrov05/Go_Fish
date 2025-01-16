@@ -8,6 +8,7 @@ using namespace std;
 
 const string faces[] = { "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A" };
 const string suits[] = { "Hearts", "Diamonds", "Clubs", "Spades" };
+const int CARDS_IN_SET = 4;
 
 void createDeck(Card deck[], int& deckSize)
 {
@@ -31,6 +32,7 @@ void shuffleDeck(Card deck[], const int& deckSize)
         swap(deck[i], deck[randIndex]);
     }
 }
+
 
 void showHand(Card hand[], const int& handSize)
 {
@@ -71,19 +73,20 @@ void showHand(Card hand[], const int& handSize)
 //Func that removes all instances of a face if there are 4 in a hand
 bool removeSetFaceIfComplete(Card hand[], int& handSize, const string& face, string facesWon[], int& WonFaces)
 {
-    int counter = 0;
+    int count = 0;
 
     // Count the cards of the specified face
     for (int i = 0; i < handSize; i++)
     {
         if (hand[i].face == face)
         {
-            counter++;
+            count++;
         }
     }
 
+
     // If exactly 4 cards of the face are found, remove them
-    if (counter == 4)
+    if (count == CARDS_IN_SET)
     {
         int newHandSize = 0;
 

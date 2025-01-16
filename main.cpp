@@ -7,12 +7,10 @@ void handlePlayerTurn
 (Card playerHand[], int& playerHandSize, 
     Card computerHand[], int& computerHandSize, 
     Card deck[], int& deckSize, 
-    string playerfacesWon[], int& playerFacesWonNumber, bool& playerTurn, string& requestedFace, Card playerLastCard)
+    string playerFacesWon[], int& playerFacesWonNumber, bool& playerTurn, string& requestedFace, Card playerLastCard)
 {
     cout << "\nYour Turn!\nYour points: " << playerFacesWonNumber << "\nYour hand:\n";
     showHand(playerHand, playerHandSize);
-    cout << "Computer: "; // test
-    showHand(computerHand, computerHandSize);
 
     if (playerHandSize == 0)
     {
@@ -20,7 +18,7 @@ void handlePlayerTurn
         {
             cout << "You have no cards. Drawing a card from the deck..." << endl;
             drawCardDeck(playerHand, playerHandSize, deck, deckSize);
-            checkAndRemoveSets(playerHand, playerHandSize, playerfacesWon, playerFacesWonNumber);
+            checkAndRemoveSets(playerHand, playerHandSize, playerFacesWon, playerFacesWonNumber);
         }
         else
         {
@@ -34,7 +32,7 @@ void handlePlayerTurn
     if (drawCard(computerHand, computerHandSize, playerHand, playerHandSize, requestedFace))
     {
         cout << "Computer had the card(s). Your Turn!" << endl;
-        checkAndRemoveSets(playerHand, playerHandSize, playerfacesWon, playerFacesWonNumber);
+        checkAndRemoveSets(playerHand, playerHandSize, playerFacesWon, playerFacesWonNumber);
     }
     else
     {
@@ -51,7 +49,7 @@ void handlePlayerTurn
                 cout << "You drew a " << requestedFace << ". Computer's turn!";
                 playerTurn = false;
             }
-            checkAndRemoveSets(playerHand, playerHandSize, playerfacesWon, playerFacesWonNumber);
+            checkAndRemoveSets(playerHand, playerHandSize, playerFacesWon, playerFacesWonNumber);
         }
         else
         {
