@@ -14,6 +14,7 @@ struct Card
     }
 };
 
+
 const int MAX_CARDS = 52;
 const int START_HAND_SIZE = 6;
 extern const std::string faces[];
