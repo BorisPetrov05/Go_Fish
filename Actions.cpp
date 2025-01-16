@@ -34,12 +34,39 @@ void shuffleDeck(Card deck[], const int& deckSize)
 
 void showHand(Card hand[], const int& handSize)
 {
+    const int numFaces = sizeof(faces) / sizeof(faces[0]);
+    Card groupedCards[MAX_CARDS][numFaces];
+    int groupSizes[numFaces] = { 0 };
+
+    // Group cards by face
     for (int i = 0; i < handSize; i++)
     {
-        cout << hand[i].ToString() << ' '; //temporary
+        for (int j = 0; j < numFaces; j++)
+        {
+            if (hand[i].face == faces[j])
+            {
+                groupedCards[groupSizes[j]++][j] = hand[i];
+                break;
+            }
+        }
+    }
+
+    // Display grouped cards
+    for (int i = 0; i < numFaces; i++)
+    {
+        if (groupSizes[i] > 0)
+        {
+            cout << faces[i] << ": ";
+            for (int k = 0; k < groupSizes[i]; k++)
+            {
+                cout << groupedCards[k][i].suit << " ";
+            }
+            cout << endl;
+        }
     }
     cout << endl;
 }
+
 
 //Func that removes all instances of a face if there are 4 in a hand
 bool removeSetFaceIfComplete(Card hand[], int& handSize, const string& face, string facesWon[],int& WonFaces)

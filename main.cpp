@@ -38,7 +38,7 @@ int main()
         //players turn
         if (playerTurn) 
         {
-            cout << "\nYour Turn!\nYour hand: ";
+            cout << "\nYour Turn!\nYour hand:\n";
             showHand(playerHand, playerHandSize);
 
             cout << "Conputer: "; //test
@@ -117,7 +117,7 @@ int main()
         //computers turn
         else
         {
-            cout << "\nComputer's turn..." << endl;
+            cout << "\n\nComputer's turn..." << endl;
 
             //actions if computer has no cards in hand
             if (computerHandSize == 0)
