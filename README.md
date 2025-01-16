@@ -1,6 +1,6 @@
 Welcome to the Go Fish card game implemented in C++. This project simulates the classic children's card game, allowing you to play against a computer opponent.
 
-Game Overview
+Game Overview:
 Go Fish is a simple card game typically played by 2 to 6 players. The objective is to collect as many sets of four cards of the same rank as possible. Players take turns asking opponents for specific card ranks, attempting to complete their sets. If the opponent doesn't have the requested card, the player "goes fishing" by drawing from the deck.
 
 How to Play:
