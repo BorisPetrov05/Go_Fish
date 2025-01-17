@@ -13,6 +13,8 @@ void handleComputerTurn
     Card deck[], int& deckSize,
     string computerFacesWon[], string playerFacesWon[], int& computerFacesWonNumber, bool& playerTurn)
 {
+    string playerInput;
+    playerInput = ""; //reset the input
     cout << "\n\nComputer's turn..." << endl;
     cout << "Computer's faces won: " << computerFacesWonNumber << endl;
 
@@ -54,16 +56,20 @@ void handleComputerTurn
 
         cout << "Computer asks for: " << computerRequest << endl;
 
+        cout << "Give " << computerRequest << " or should the computer go fish?: ";
+
+        getline(cin, playerInput);
+
         if (drawCard(playerHand, playerHandSize, computerHand, computerHandSize, computerRequest))
         {
-            cout << "Computer took your card(s)! It goes again!" << endl;
+            cout << "\nComputer took your card(s)! It goes again!" << endl;
             checkAndRemoveSets(computerHand, computerHandSize, computerFacesWon, computerFacesWonNumber);
         }
         else
         {
             if (deckSize > 0)
             {
-                cout << "Computer goes fishing..." << endl;
+                cout << "\nComputer goes fishing..." << endl;
                 drawCardDeck(computerHand, computerHandSize, deck, deckSize);
 
                 string faceOfDrawnCard = computerHand[computerHandSize - 1].face;

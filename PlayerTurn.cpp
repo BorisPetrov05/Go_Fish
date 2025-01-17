@@ -43,8 +43,8 @@ void handlePlayerTurn
         }
     }
 
-    cout << "\nWhat do you want to do? Steal or draw: ";
-    cin >> request;
+    cout << "What do you want to do? Steal or draw: ";
+    getline(cin, request);
 
     if (request == "draw")
     {
@@ -67,7 +67,8 @@ void handlePlayerTurn
     else
     {
         cout << "Ask for a card face: ";
-        cin >> request;
+        getline(cin, request);
+
         if (checkIfHasCard(playerHand, playerHandSize, request))
         {
             if (drawCard(computerHand, computerHandSize, playerHand, playerHandSize, request))
@@ -126,7 +127,7 @@ void handlePlayerTurnSecondStage
     else
     {
         cout << "Ask for a card face: ";
-        cin >> request;
+        getline(cin, request);
 
         if (drawSet(playerFacesWon, playerFacesWonNumber, computerFacesWon, computerFacesWonNumber, request))
         {
