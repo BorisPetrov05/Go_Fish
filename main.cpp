@@ -20,7 +20,7 @@ int main()
     dealCards(deck, deckSize, playerHand, playerHandSize, computerHand, computerHandSize);
 
     bool playerTurn = true;
-    string requestedFace;
+    string request;
 
     string playerFacesWon[MAX_CARDS];
     int playerFacesWonNumber = 0;
@@ -37,7 +37,7 @@ int main()
             handlePlayerTurn(playerHand, playerHandSize, 
                 computerHand, computerHandSize, 
                 deck, deckSize,
-                playerFacesWon, playerFacesWonNumber, playerTurn, requestedFace);
+                playerFacesWon, playerFacesWonNumber, playerTurn, request);
         }
         else
         {
@@ -54,14 +54,13 @@ int main()
     }
 
     bool over = false;
-    bool winner = false;
     while (true) //second stage
     {
         if (playerTurn)
         {
             handlePlayerTurnSecondStage(playerFacesWon, playerFacesWonNumber,
                 computerFacesWon, computerFacesWonNumber,
-                playerTurn, requestedFace, over);
+                playerTurn, request, over);
         }
         else
         {
