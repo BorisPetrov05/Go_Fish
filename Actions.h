@@ -1,5 +1,20 @@
-#ifndef ACTIONS_H
-#define ACTIONS_H
+/**
+*
+* Solution to course project # 8
+* Introduction to programming course
+* Faculty of Mathematics and Informatics of Sofia University
+* Winter semester 2024/2025
+*
+* @author Boris Petrov
+* @idnumber 1MI0600528
+* @compiler VC
+*
+* header file for Actions.cpp
+*
+*/
+
+#pragma once
+
 
 #include "Card.h"
 
@@ -27,5 +42,3 @@ bool checkIfHasCard(Card Hand[], int& HandSize, const std::string& face);
 
 bool drawSet(std::string fromPlayerSets[], int& playerSetsSize, std::string toPlayerSets[], int& toPlayerSetsSize, const std::string& face);
 
-
-#endif

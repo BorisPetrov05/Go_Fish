@@ -1,3 +1,18 @@
+/**
+*
+* Solution to course project # 8
+* Introduction to programming course
+* Faculty of Mathematics and Informatics of Sofia University
+* Winter semester 2024/2025
+*
+* @author Boris Petrov
+* @idnumber 1MI0600528
+* @compiler VC
+*
+* manages a turn of the computer
+*
+*/
+
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
@@ -14,7 +29,6 @@ void handleComputerTurn
     string computerFacesWon[], string playerFacesWon[], int& computerFacesWonNumber, bool& playerTurn)
 {
     string playerInput;
-    playerInput = ""; //reset the input
     cout << "\n\nComputer's turn..." << endl;
     cout << "Computer's faces won: " << computerFacesWonNumber << endl;
 
@@ -101,7 +115,7 @@ void handleComputerTurnSecondStage
     string playerFacesWon[], int& playerFacesWonNumber,
     bool playerTurn, bool over)
 {
-    cout << "\Computer's Turn!\Computer's faces won: " << computerFacesWonNumber << endl;
+    cout << "\nComputer's Turn!\nComputer's faces won: " << computerFacesWonNumber << endl;
 
     if (computerFacesWonNumber == 0)
     {

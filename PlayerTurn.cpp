@@ -1,3 +1,18 @@
+/**
+*
+* Solution to course project # 8
+* Introduction to programming course
+* Faculty of Mathematics and Informatics of Sofia University
+* Winter semester 2024/2025
+*
+* @author Boris Petrov
+* @idnumber 1MI0600528
+* @compiler VC
+*
+* manages a turn of the player
+*
+*/
+
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
