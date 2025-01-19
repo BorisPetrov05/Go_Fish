@@ -63,29 +63,31 @@ int main()
 
         if (checkIfSecondStage(computerHandSize, deckSize, playerFacesWonNumber, computerFacesWonNumber))
         {
-            cout << ("\nEntering the second stage of the game!\n") << endl;
+            cout << ("\nEntering the second stage of the game!") << endl;
             break;
         }
     }
 
     bool over = false;
+    playerTurn = true;
     while (true) //second stage
     {
-        if (playerTurn)
+        if (over)
+        {
+            cout << "Game Over!";
+            break;
+        }
+        else if (playerTurn)
         {
             handlePlayerTurnSecondStage(playerFacesWon, playerFacesWonNumber,
                 computerFacesWon, computerFacesWonNumber,
-                playerTurn, request, over);
+                playerTurn, over);
         }
         else
         {
             handleComputerTurnSecondStage(computerFacesWon, computerFacesWonNumber,
                 playerFacesWon, playerFacesWonNumber,
                 playerTurn, over);
-        }
-        if (over)
-        {
-            break;
         }
     }
 }

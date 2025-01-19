@@ -42,3 +42,11 @@ bool checkIfHasCard(Card Hand[], int& HandSize, const std::string& face);
 
 bool drawSet(std::string fromPlayerSets[], int& playerSetsSize, std::string toPlayerSets[], int& toPlayerSetsSize, const std::string& face);
 
+bool checkIfHasSet(std::string playerFacesWon[], int& computerFacesWonNumber, std::string& request);
+
+bool checkIfHasSetComp(std::string computerFacesWon[], int& playerFacesWonNumber, std::string& request);
+
+void chooseRandFromPlayerHand(std::string& computerRequest, Card computerHand[], int& computerHandSize,
+	std::string computerFacesWon[], std::string playerFacesWon[], int& computerFacesWonNumber);
+
+

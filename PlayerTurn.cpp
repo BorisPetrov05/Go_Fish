@@ -27,7 +27,7 @@ void handlePlayerTurn
     Card deck[], int& deckSize,
     string playerFacesWon[], int& playerFacesWonNumber, bool& playerTurn, string& request)
 {
-    cout << "\nYour Turn!\nYour faces won: " << playerFacesWonNumber << "\nYour hand:\n";
+    cout << "\nYour Turn!\nYour faces won: " << playerFacesWonNumber << "\nYour hand:" << endl;
     showHand(playerHand, playerHandSize);
 
     string faceOfDrawnCard;
@@ -41,15 +41,9 @@ void handlePlayerTurn
 
             faceOfDrawnCard = playerHand[playerHandSize - 1].face;
 
-            if (faceOfDrawnCard == request)
-            {
-                cout << "You drew a " << faceOfDrawnCard << ". Your Turn!";
-            }
-            else
-            {
-                cout << "You drew a " << faceOfDrawnCard << ". Computer's turn!";
-                playerTurn = false;
-            }
+            cout << "You drew a " << faceOfDrawnCard << ". Computer's turn!" << endl;
+            playerTurn = false;
+
             checkAndRemoveSets(playerHand, playerHandSize, playerFacesWon, playerFacesWonNumber);
         }
         else
@@ -58,7 +52,7 @@ void handlePlayerTurn
         }
     }
 
-    cout << "What do you want to do? Steal or draw: ";
+    cout << "What do you want to do? Steal or draw?" << endl << "> ";
     getline(cin, request);
 
     if (request == "draw")
@@ -68,20 +62,20 @@ void handlePlayerTurn
 
         if (faceOfDrawnCard == request)
         {
-            cout << "You drew a " << faceOfDrawnCard << ". Your Turn!";
+            cout << "You drew a " << faceOfDrawnCard << ". Your Turn!" << endl;
         }
         else
         {
-            cout << "You drew a " << faceOfDrawnCard << ". Computer's turn!";
+            cout << "You drew a " << faceOfDrawnCard << ". Computer's turn!" << endl;
             playerTurn = false;
         }
 
         checkAndRemoveSets(playerHand, playerHandSize, playerFacesWon, playerFacesWonNumber);
 
     }
-    else
+    else if(request == "steal")
     {
-        cout << "Ask for a card face: ";
+        cout << "Ask for a card face:" << endl << "> ";
         getline(cin, request);
 
         if (checkIfHasCard(playerHand, playerHandSize, request))
@@ -102,11 +96,11 @@ void handlePlayerTurn
 
                     if (faceOfDrawnCard == request)
                     {
-                        cout << "You drew a " << faceOfDrawnCard << ". Your Turn!";
+                        cout << "You drew a " << faceOfDrawnCard << ". Your Turn!" << endl;
                     }
                     else
                     {
-                        cout << "You drew a " << faceOfDrawnCard << ". Computer's turn!";
+                        cout << "You drew a " << faceOfDrawnCard << ". Computer's turn!" << endl;
                         playerTurn = false;
                     }
                     checkAndRemoveSets(playerHand, playerHandSize, playerFacesWon, playerFacesWonNumber);
@@ -120,37 +114,54 @@ void handlePlayerTurn
         }
         else
         {
-            cout << "You can't ask for a card face you don't have!";
+            cout << "You can't ask for a card face you don't have!" << endl;
             playerTurn = false;
         }
+    }
+    else
+    {
+        cout << "\n--Invalid command!--" << endl;
     }
     
 }
 
+
+
 void handlePlayerTurnSecondStage
 (string playerFacesWon[], int& playerFacesWonNumber,
     string computerFacesWon[], int& computerFacesWonNumber,
-    bool playerTurn, string& request, bool over)
+    bool& playerTurn, bool& over)
 {
     cout << "\nYour Turn!\nYour faces won: " << playerFacesWonNumber << endl;
 
-    if (playerFacesWonNumber == 0)
+    if (playerFacesWonNumber == 13)
     {
-        cout << "You lose! Better luck next time!";
+        cout << "You win! Good job! " << endl;
         over = true;
     }
     else
-    {
-        cout << "Ask for a card face: ";
-        getline(cin, request);
+    {       
+        string request;
 
-        if (drawSet(playerFacesWon, playerFacesWonNumber, computerFacesWon, computerFacesWonNumber, request))
+        cout << "Ask for a card face:" << endl << "> ";
+        if (!(checkIfHasSet(playerFacesWon, computerFacesWonNumber, request)))
         {
-            cout << "Computer has the set! Your Turn!" << endl;
+            getline(cin, request);
+
+            if (drawSet(computerFacesWon, computerFacesWonNumber, playerFacesWon, playerFacesWonNumber, request))
+            {
+                cout << "Computer has the set " << request << "! Your Turn!" << endl;
+            }
+            else
+            {
+                cout << "Go Fish! Computer's turn!" << endl;
+                playerTurn = false;
+            }
         }
         else
         {
-            cout << "Go Fish! Computer's turn!" << endl;
+            getline(cin, request);
+            cout << "You already have " << request << endl;
             playerTurn = false;
         }
     }

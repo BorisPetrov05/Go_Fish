@@ -23,7 +23,7 @@ void handlePlayerTurn
 
 void handlePlayerTurnSecondStage
 (std::string playerFacesWon[], int& playerFacesWonNumber, std::string computerFacesWon[], int& computerFacesWonNumber,
-    bool playerTurn, std::string& requestedFace, bool over);
+    bool& playerTurn, bool& over);
 
 
 
@@ -36,4 +36,4 @@ void handleComputerTurn
 void handleComputerTurnSecondStage
 (std::string computerFacesWon[], int& computerFacesWonNumber,
     std::string playerFacesWon[], int& playerFacesWonNumber,
-    bool playerTurn, bool over);
+    bool& playerTurn, bool& over);

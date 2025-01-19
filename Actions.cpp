@@ -44,7 +44,7 @@ void shuffleDeck(Card deck[], const int& deckSize)
     srand(static_cast<unsigned>(time(0))); //convert time_t to unsigned int and seed
     for (int i = 0; i < deckSize; i++)
     {
-        int randIndex = rand() % deckSize; //random index
+        int randIndex = rand() % deckSize;
         swap(deck[i], deck[randIndex]);
     }
 }
@@ -201,13 +201,13 @@ void drawCardDeck(Card hand[], int& HandSize, Card deck[], int& deckSize)
 //Second phase of the game:
 
 //Func draw a set from a player/take a set from enemy
-bool drawSet(string fromPlayerSets[], int& playerSetsSize, string toEnemySets[], int& toEnemySetsSize, const string& face)
+bool drawSet(string fromPlayerSets[], int& fromPlayerSetsSize, string toEnemySets[], int& toEnemySetsSize, const string& face)
 {
     string temp[MAX_SETS];
     int tempSize = 0;
     bool found = false;
 
-    for (int i = 0; i < playerSetsSize; i++)
+    for (int i = 0; i < fromPlayerSetsSize; i++)
     {
         if (fromPlayerSets[i] == face)
         {
@@ -219,7 +219,7 @@ bool drawSet(string fromPlayerSets[], int& playerSetsSize, string toEnemySets[],
             fromPlayerSets[i - tempSize] = fromPlayerSets[i];
         }
     }
-    fromPlayerSets -= tempSize;
+    fromPlayerSetsSize -= tempSize;
 
     for (int i = 0; i < tempSize; i++)
     {
@@ -228,3 +228,53 @@ bool drawSet(string fromPlayerSets[], int& playerSetsSize, string toEnemySets[],
 
     return found;
 }
+
+bool checkIfHasSet(string playerFacesWon[], int& computerFacesWonNumber, string& request)
+{
+    for (int i = 0; i < computerFacesWonNumber; i++)
+    {
+        if (playerFacesWon[i] == request)
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool checkIfHasSetComp(string computerFacesWon[], int& playerFacesWonNumber, string& request)
+{
+    for (int i = 0; i < playerFacesWonNumber; i++)
+    {
+        if (computerFacesWon[i] == request)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+void chooseRandFromPlayerHand(string& computerRequest, Card computerHand[], int& computerHandSize, string computerFacesWon[], string playerFacesWon[], int& computerFacesWonNumber)
+{
+    while (true)
+    {
+        bool found = false;
+        computerRequest = computerHand[rand() % computerHandSize].face;
+        for (int i = 0; i < computerFacesWonNumber; i++)
+        {
+            if (computerFacesWon[i] == computerRequest || playerFacesWon[i] == computerRequest)
+            {
+                found = true;
+            }
+        }
+        if (found == false)
+        {
+            break;
+        }
+    }
+}
+
+//void clear()
+//{
+//    // CSI[2J clears screen, CSI[H moves the cursor to top-left corner
+//    std::cout << "\x1B[2J\x1B[H";
+//}
