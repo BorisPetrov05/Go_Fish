@@ -54,7 +54,7 @@ void handleComputerTurn
         while (true)
         {
             bool found = false;
-            computerRequest = faces[rand() % 13];
+            computerRequest = computerHand[rand() % computerHandSize].face;
             for (int i = 0; i < computerFacesWonNumber; i++)
             {
                 if (computerFacesWon[i] == computerRequest || playerFacesWon[i] == computerRequest)
@@ -95,7 +95,7 @@ void handleComputerTurn
                 }
                 else
                 {
-                    cout << "Computer drew a " << faceOfDrawnCard << "." << endl;
+                    cout << "Computer drew a card." << "." << endl;
                     playerTurn = true;
                 }
                 checkAndRemoveSets(computerHand, computerHandSize, computerFacesWon, computerFacesWonNumber);

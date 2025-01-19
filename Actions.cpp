@@ -100,7 +100,6 @@ bool removeSetFaceIfComplete(Card hand[], int& handSize, const string& face, str
         }
     }
 
-
     // If exactly 4 cards of the face are found, remove them
     if (count == CARDS_IN_SET)
     {
