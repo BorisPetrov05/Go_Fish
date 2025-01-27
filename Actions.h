@@ -24,7 +24,7 @@ void shuffleDeck(Card deck[], const int& deckSize);
 
 void showHand(Card hand[], const int& handSize);
 
-bool checkIfSecondStage(const int handSize, const int& deckSize, const int& facesWon, const int& facesWonEnemy);
+bool checkIfSecondStage(const int& deckSize, const int& facesWon, const int& facesWonEnemy);
 
 bool drawCard(Card fromHand[], int& fromHandSize, Card toHand[], int& toHandSize, const std::string& face);
 

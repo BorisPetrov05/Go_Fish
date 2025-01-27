@@ -61,7 +61,7 @@ int main()
                 deck, deckSize, computerFacesWon, playerFacesWon, computerFacesWonNumber, playerTurn);
         }
 
-        if (checkIfSecondStage(computerHandSize, deckSize, playerFacesWonNumber, computerFacesWonNumber))
+        if (checkIfSecondStage(deckSize, playerFacesWonNumber, computerFacesWonNumber))
         {
             cout << ("\nEntering the second stage of the game!") << endl;
             break;
