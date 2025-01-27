@@ -132,9 +132,9 @@ void checkAndRemoveSets(Card hand[], int& handSize, string facesWon[], int& face
     }
 }
 
-bool checkIfSecondStage(const int& deckSize, const int& facesWon, const int& facesWonEnemy)
+bool checkIfSecondStage(const int handSize, const int& deckSize, const int& facesWon, const int& facesWonEnemy)
 {
-    return facesWon+facesWonEnemy == MAX_SETS && deckSize == 0;
+    return handSize == 0 && deckSize == 0;
 }
 
 //Func checks if you have the card for after asking for a card you don't have
